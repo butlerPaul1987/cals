@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    img {
+        display: block;
+        margin: auto;
+        width: 150px;
+        height: 150px;
+    }
+
+    /* Background */
+    body {
+        background-color: #1b1f23; /* Dark gunmetal background */
+        font-family: sans-serif;
+    }
+
+    /* Center input section */
+    #inputs {
+        max-width: 300px;
+        margin: 20px auto;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    /* Inputs */
+    input {
+        padding: 10px;
+        font-size: 14px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        outline: none;
+        text-align: center;
+        background-color: #dce4ec; /* Soft steel blue */
+        color: #1b1f23; /* Dark text for contrast */
+        transition: 0.2s ease-in-out;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    input:focus {
+        border-color: #1e3d58; /* Deep blue focus */
+        box-shadow: 0 0 5px rgba(30,61,88,0.5);
+    }
+
+    /* Primary Button */
+    button {
+        padding: 10px;
+        background-color: #b7410e; /* Rusty orange */
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out, transform 0.1s;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    }
+    button:hover {
+        background-color: #a0390d; /* Darker rusty orange */
+    }
+    button:active {
+        transform: scale(0.98);
+    }
+
+    /* Secondary Button Style */
+    button.secondary {
+        background-color: #1e3d58; /* Deep blue */
+        color: white;
+    }
+    button.secondary:hover {
+        background-color: #162c3e; /* Darker blue */
+    }
+
+    /* Accent Button Style */
+    button.accent {
+        background-color: #00ffff; /* Electric cyan */
+        color: #1b1f23; /* Dark text */
+    }
+    button.accent:hover {
+        background-color: #00cccc; /* Muted cyan */
+    }
+
+
+    /* Nutrition label styling */
+    .nutrition-label {
+        width: 250px;
+        border: 2px solid black;
+        padding: 10px;
+        margin: 15px auto;
+        font-family: Arial, sans-serif;
+        background: white;
+    }
+    .nutrition-label h2 {
+        font-size: 18px;
+        font-weight: bold;
+        border-bottom: 8px solid black;
+        margin-bottom: 5px;
+        padding-bottom: 3px;
+        text-align: center;
+    }
+    .nutrition-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 14px;
+        border-top: 1px solid black;
+        padding: 4px 0;
+    }
+    </style>
+</head>
+<body>
+
+    <div id="header">
+        <header>
+            <img src="images/cclogo.png">
+        </header>
+    </div>
+
+    <div id="inputs">
+        <input type="text" id="grams" placeholder="Add weighed grams">
+        <input type="text" id="cals" placeholder="Add 100g calories">
+        <input type="text" id="protein" placeholder="Add 100g protein">
+        <button onclick="calculate()">Press to Calculate</button>         
+    </div>
+
+    <div id="result"></div> <!-- Nutrition label will appear here -->
+
+    <script>
+        function calculate() {
+            let grams = parseFloat(document.getElementById("grams").value);
+            let cals = parseFloat(document.getElementById("cals").value);
+            let protein = parseFloat(document.getElementById("protein").value);
+
+            if (isNaN(grams) || isNaN(cals) || isNaN(protein)) {
+                document.getElementById("result").innerHTML = 
+                    "<p style='text-align:center;color:red;'>Please enter valid numbers.</p>";
+                return;
+            }
+
+            let TotalCals = cals * (grams / 100);
+            let TotalProtein = protein * (grams / 100);
+
+            document.getElementById("result").innerHTML = `
+                <div class="nutrition-label">
+                    <h2>Nutrition Facts</h2>
+                    <div class="nutrition-row"><strong>Serving Size</strong> <span>${grams} g</span></div>
+                    <div class="nutrition-row"><strong>Total Calories</strong> <span>${TotalCals.toFixed(2)} cals</span></div>
+                    <div class="nutrition-row"><strong>Protein</strong> <span>${TotalProtein.toFixed(2)} g</span></div>
+                </div>
+            `;
+        }
+    </script>
+
+</body>
+</html>
